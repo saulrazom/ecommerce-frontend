@@ -5,35 +5,13 @@ import Footer from './components/Footer.vue'
 </script>
 
 <template>
-  <div class="app-wrapper">
+  <div class="flex min-h-screen flex-col bg-[#f8f5ee] text-[#2f3e31] antialiased">
     <Navbar />
 
-    <main class="layout-container">
+    <main class="mx-auto my-8 w-full max-w-5xl flex-1 rounded-2xl border border-[#d6e2cc] bg-[#eef5e9] px-4 py-10 sm:px-6">
       <RouterView />
     </main>
 
     <Footer />
   </div>
 </template>
-
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f8f9fa;
-}
-
-.layout-container {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  flex: 1; /* Hace que el main tome el espacio disponible */
-}
-
-.app-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Fuerza a que la página mida al menos el 100% del alto de la pantalla */
-}
-</style>
