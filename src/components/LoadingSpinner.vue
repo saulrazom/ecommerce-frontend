@@ -1,40 +1,6 @@
 <template>
-  <div class="spinner-container">
-    <div class="spinner"></div>
-    <p>Cargando datos...</p>
+  <div class="flex flex-col items-center justify-center py-8">
+    <div class="h-8 w-8 animate-spin rounded-full border-2 border-[#d6e2cc] border-t-[#6f8b63]"></div>
+    <p class="mt-3 text-sm font-medium text-[#5a725f]">Loading data...</p>
   </div>
 </template>
-
-<style scoped>
-.spinner-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #42b983;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-p {
-  color: #2c3e50;
-  margin-top: 1rem;
-  font-weight: bold;
-}
-</style>

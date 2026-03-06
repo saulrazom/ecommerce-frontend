@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-// 1. Creamos la instancia base
+// 1. Create base instance
 const api = axios.create({
-  // Vite usa import.meta.env para leer variables de entorno
+  // Vite uses import.meta.env for environment variables
   baseURL: import.meta.env.VITE_API_GATEWAY_URL || 'http://localhost:3000',
   timeout: 10000,
   headers: {
@@ -10,32 +10,30 @@ const api = axios.create({
   },
 })
 
-// 2. Interceptor de Respuestas (El "Manejador de Errores" que pide el profe)
+// 2. Response interceptor (global error handler)
 api.interceptors.response.use(
   (response) => {
-    // Si la petición es exitosa (ej. 200 OK), simplemente pasamos los datos
+    // Successful response, return as is
     return response
   },
   (error) => {
-    // Si el backend falla, este bloque atrapa el error antes de que rompa la app
-    console.error('Error global en la API:', error)
+    // Catch backend/network errors before they break UI flows
+    console.error('Global API error:', error)
 
     if (error.response) {
-      // El servidor respondió con un código de error
+      // Server responded with an error status code
       const status = error.response.status
       if (status === 404) {
-        alert('Ups... El recurso que buscas no existe (404).')
+        alert('Oops... The requested resource does not exist (404).')
       } else if (status >= 500) {
-        alert('Error en el servidor de backend. Los de DevOps ya están sudando (500).')
+        alert('Backend server error. Please try again later (500).')
       }
     } else if (error.request) {
-      // La petición salió, pero no hubo respuesta (backend caído o sin internet)
-      alert(
-        'Error de red. Revisa tu conexión a internet o verifica si el API Gateway está encendido.',
-      )
+      // Request was sent but no response arrived (network or backend down)
+      alert('Network error. Check your internet connection or verify the API Gateway is running.')
     }
 
-    // Rechazamos la promesa para que el componente que hizo la llamada sepa que falló
+    // Reject promise so caller components can handle the failure
     return Promise.reject(error)
   },
 )
