@@ -1,0 +1,41 @@
+import axios from 'axios'
+
+// 1. Create base instance
+const api = axios.create({
+  // Vite uses import.meta.env for environment variables
+  baseURL: import.meta.env.VITE_API_GATEWAY_URL || 'http://localhost:3000',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
+// 2. Response interceptor (global error handler)
+api.interceptors.response.use(
+  (response) => {
+    // Successful response, return as is
+    return response
+  },
+  (error) => {
+    // Catch backend/network errors before they break UI flows
+    console.error('Global API error:', error)
+
+    if (error.response) {
+      // Server responded with an error status code
+      const status = error.response.status
+      if (status === 404) {
+        alert('Oops... The requested resource does not exist (404).')
+      } else if (status >= 500) {
+        alert('Backend server error. Please try again later (500).')
+      }
+    } else if (error.request) {
+      // Request was sent but no response arrived (network or backend down)
+      alert('Network error. Check your internet connection or verify the API Gateway is running.')
+    }
+
+    // Reject promise so caller components can handle the failure
+    return Promise.reject(error)
+  },
+)
+
+export default api
