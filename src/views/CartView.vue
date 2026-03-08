@@ -18,7 +18,7 @@
     <div v-else class="space-y-3 rounded-lg border border-[#d6e2cc] bg-[#fffdf7] p-4">
       <div
         v-for="product in cartItems"
-        :key="product.id"
+        :key="product.productId"
         class="flex flex-col gap-3 border-b border-[#e7eee1] pb-3 last:border-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between"
       >
         <div class="min-w-0">
@@ -29,7 +29,7 @@
           <button
             type="button"
             class="h-7 w-7 rounded-md border border-[#c5d7b8] text-[#4d6953] transition hover:bg-[#edf4e8]"
-            @click="cartStore.decreaseQty(product.id)"
+            @click="cartStore.decreaseQty(product.productId)"
           >
             -
           </button>
@@ -37,7 +37,7 @@
           <button
             type="button"
             class="h-7 w-7 rounded-md border border-[#c5d7b8] text-[#4d6953] transition hover:bg-[#edf4e8]"
-            @click="cartStore.increaseQty(product.id)"
+            @click="cartStore.increaseQty(product.productId)"
           >
             +
           </button>
@@ -47,7 +47,7 @@
           <button
             type="button"
             class="text-xs font-medium text-[#7a4d4d] transition hover:text-[#5f3535]"
-            @click="cartStore.removeFromCart(product.id)"
+            @click="cartStore.removeFromCart(product.productId)"
           >
             Remove
           </button>

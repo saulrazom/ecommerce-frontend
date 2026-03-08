@@ -33,9 +33,36 @@ Make sure you have Node.js installed on your local machine to run this project.
 
 4. Configure environment variables:
    Create a `.env` file in the root directory and add the API Gateway endpoints. Ask the infrastructure team (Saúl/Juan Pablo) for the current URLs.
+
+   This project uses a **single API Gateway base URL** for both microservices.
+
+   ### Local development (no backend changes, avoids CORS)
+   For local development, we recommend using the Vite dev-server proxy.
+
+   ```env
+   VITE_API_MODE=proxy
+   VITE_API_GATEWAY_URL=http://localhost:3000
+   ```
+
+   In this mode the frontend calls `/products` on the Vite origin (http://localhost:5173)
+   and Vite forwards the request to http://localhost:3000.
+
+   **Local (recommended while developing):**
    
-   VITE_PRODUCTS_API_URL=http://<api-gateway-url>/products
-   VITE_ORDERS_API_URL=http://<api-gateway-url>/orders
+   VITE_API_GATEWAY_URL=http://localhost:3000
+
+   **Deployed (AWS API Gateway):**
+
+   ```env
+   VITE_API_MODE=direct
+   VITE_API_GATEWAY_URL=https://<api-gateway-url>
+   ```
+
+   VITE_API_GATEWAY_URL=https://<api-gateway-url>
+
+   The frontend will call endpoints like:
+   - `GET {VITE_API_GATEWAY_URL}/products`
+   - `POST {VITE_API_GATEWAY_URL}/orders`
 
 5. Start the development server:
    npm run dev

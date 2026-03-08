@@ -1,9 +1,14 @@
 import axios from 'axios'
 
+const apiMode = import.meta.env.VITE_API_MODE || 'direct'
+// In proxy mode, requests go to the same origin (Vite dev server) and Vite forwards them.
+// This avoids CORS without changing the backend.
+const baseURL = apiMode === 'proxy' ? '' : (import.meta.env.VITE_API_GATEWAY_URL || 'http://localhost:3000')
+
 // 1. Create base instance
 const api = axios.create({
   // Vite uses import.meta.env for environment variables
-  baseURL: import.meta.env.VITE_API_GATEWAY_URL || 'http://localhost:3000',
+  baseURL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
