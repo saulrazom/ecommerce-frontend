@@ -60,6 +60,10 @@ export const useCartStore = defineStore('cart', () => {
     items.value = items.value.filter((item) => item.productId !== productId)
   }
 
+  function clearCart() {
+    items.value = []
+  }
+
   return {
     cartItems,
     cartCount,
@@ -68,5 +72,6 @@ export const useCartStore = defineStore('cart', () => {
     increaseQty,
     decreaseQty,
     removeFromCart,
+    clearCart,
   }
 })
