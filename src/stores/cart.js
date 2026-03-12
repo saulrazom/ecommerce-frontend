@@ -24,7 +24,7 @@ export const useCartStore = defineStore('cart', () => {
 
   function addToCart(product, quantity = 1) {
     const safeQty = Number.isFinite(quantity) ? Math.max(1, Math.trunc(quantity)) : 1
-    const existing = items.value.find((item) => item.id === product.id)
+    const existing = items.value.find((item) => item.productId === product.productId)
 
     if (existing) {
       existing.qty += safeQty
@@ -32,7 +32,7 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     items.value.push({
-      id: product.id,
+      productId: product.productId,
       name: product.name,
       price: product.price,
       qty: safeQty,
@@ -40,12 +40,12 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   function increaseQty(productId) {
-    const item = items.value.find((entry) => entry.id === productId)
+    const item = items.value.find((entry) => entry.productId === productId)
     if (item) item.qty += 1
   }
 
   function decreaseQty(productId) {
-    const item = items.value.find((entry) => entry.id === productId)
+    const item = items.value.find((entry) => entry.productId === productId)
     if (!item) return
 
     if (item.qty === 1) {
@@ -57,7 +57,11 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   function removeFromCart(productId) {
-    items.value = items.value.filter((item) => item.id !== productId)
+    items.value = items.value.filter((item) => item.productId !== productId)
+  }
+
+  function clearCart() {
+    items.value = []
   }
 
   return {
@@ -68,5 +72,6 @@ export const useCartStore = defineStore('cart', () => {
     increaseQty,
     decreaseQty,
     removeFromCart,
+    clearCart,
   }
 })
