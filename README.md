@@ -68,4 +68,4 @@ Make sure you have Node.js installed on your local machine to run this project.
    npm run dev
 
 
-trigerr...
+tri
